@@ -78,6 +78,10 @@
             <artifactId>json</artifactId>
             <version>20180130</version>
         </dependency>
+
+        <dependency> <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId> <version>0.14</version>
+        </dependency>
     </dependencies>
 
     <build>
