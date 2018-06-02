@@ -1,9 +1,19 @@
-package pl.coderslab.model;
+package pl.coderslab.theultimateapi.entity;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Entity
 public class Match {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
     private Team team1;
 
+    @ManyToOne
     private Team team2;
 
     private int pointsTeam1;
@@ -14,7 +24,17 @@ public class Match {
 
     private int oddsTeam2;
 
+    private LocalDate date;
+
     public Match() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Team getTeam1() {
@@ -63,5 +83,13 @@ public class Match {
 
     public void setOddsTeam2(int oddsTeam2) {
         this.oddsTeam2 = oddsTeam2;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }
