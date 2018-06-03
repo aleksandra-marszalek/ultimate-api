@@ -6,9 +6,12 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import pl.coderslab.theultimateapi.entity.Game;
+import pl.coderslab.theultimateapi.entity.Team;
 import pl.coderslab.theultimateapi.repository.GameRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @Service
@@ -16,6 +19,51 @@ public class GameServiceImpl implements GameService{
 
     @Autowired
     GameRepository gameRepository;
+
+    @Override
+    public List<Game> findAll() {
+        return gameRepository.findAll();
+    }
+
+    @Override
+    public List<Game> findAllPlanned() {
+        return gameRepository.findAllByStatus(0);
+    }
+
+    @Override
+    public List<Game> findAllFinished() {
+        return gameRepository.findAllByStatus(1);
+    }
+
+    @Override
+    public Game findById(Long id) {
+        return gameRepository.findGameById(id);
+    }
+
+    @Override
+    public void save(Game game) {
+        gameRepository.save(game);
+    }
+
+    @Override
+    public void saveAll(List<Game> games) {
+        for (Game g: games) {
+            gameRepository.save(g);
+        }
+    }
+
+    @Override
+    public List<Game> findAllByTeam(Team team) {
+        List<Game> allGames = new ArrayList<>();
+        for (Game g: gameRepository.findAllByTeam1(team)) {
+            allGames.add(g);
+        }
+        for (Game g: gameRepository.findAllByTeam2(team)) {
+            allGames.add(g);
+        }
+        return allGames;
+    }
+
 
 //    GameServiceImpl() throws JSONException{ this.regenerate();
 //    }
