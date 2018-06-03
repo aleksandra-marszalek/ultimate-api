@@ -15,22 +15,22 @@ public class GameServiceImpl {
     GameServiceImpl() throws JSONException{ this.regenerate();
     }
     public ArrayList<JSONObject> getMatches() {
-        return matches;
+        return games;
     }
 
-    private ArrayList<JSONObject> matches = new ArrayList<>();
+    private ArrayList<JSONObject> games = new ArrayList<>();
 
     @Scheduled(fixedRate = 5000)
     public void regenerate() throws JSONException {
         Faker faker = new Faker(new Locale("pl_PL"));
-        matches.clear();
+        games.clear();
         for (int i = 0; i < 10; i++) {
             JSONObject oJsonInner = new JSONObject();
             oJsonInner.put("firstTeam", faker.team().name());
             oJsonInner.put("firstPoints", faker.number().randomDigitNotZero());
             oJsonInner.put("secondTeam", faker.team().name());
             oJsonInner.put("secondPoints", faker.number().randomDigitNotZero());
-            matches.add(oJsonInner);
+            games.add(oJsonInner);
         }
     }
 
