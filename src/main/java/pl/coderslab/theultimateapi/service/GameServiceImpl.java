@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 @Service
-public class MatchService {
+public class GameServiceImpl {
 
-    MatchService() throws JSONException{ this.regenerate();
+    GameServiceImpl() throws JSONException{ this.regenerate();
     }
     public ArrayList<JSONObject> getMatches() {
         return matches;

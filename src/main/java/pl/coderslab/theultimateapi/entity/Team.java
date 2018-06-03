@@ -12,9 +12,9 @@ public class Team {
 
     private String name;
 
-    private String seeding;
+    private int seeding;
 
-    private String strength;
+    private double strength;
 
     @OneToMany(mappedBy = "team1")
     private List<Game> gamesAsTeam1;
@@ -41,19 +41,19 @@ public class Team {
         this.name = name;
     }
 
-    public String getSeeding() {
+    public int getSeeding() {
         return seeding;
     }
 
-    public void setSeeding(String seeding) {
+    public void setSeeding(int seeding) {
         this.seeding = seeding;
     }
 
-    public String getStrength() {
+    public double getStrength() {
         return strength;
     }
 
-    public void setStrength(String strength) {
+    public void setStrength(double strength) {
         this.strength = strength;
     }
 

@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import pl.coderslab.theultimateapi.service.MatchService;
+import pl.coderslab.theultimateapi.service.GameServiceImpl;
 
 @Controller
-public class MatchController {
+public class GameController {
 
     @Autowired
-    MatchService matchService;
+    GameServiceImpl gameService;
 
     @GetMapping(path= "/get-matches")
     @ResponseBody
     public String sample() {
-        return matchService.getMatches().toString();
+        return gameService.getMatches().toString();
     }
 }
