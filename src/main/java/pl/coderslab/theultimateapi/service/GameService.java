@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import pl.coderslab.theultimateapi.entity.Game;
 import pl.coderslab.theultimateapi.entity.Team;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,5 +31,7 @@ public interface GameService {
     public void addThirdGroupGames ();
 
     public ArrayList<JSONObject> getAllGames();
+
+    public void playGames(LocalDateTime gameTime);
 
 }

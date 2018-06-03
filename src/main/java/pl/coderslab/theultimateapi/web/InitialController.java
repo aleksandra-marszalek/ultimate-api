@@ -1,8 +1,10 @@
 package pl.coderslab.theultimateapi.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.theultimateapi.entity.Team;
@@ -10,6 +12,8 @@ import pl.coderslab.theultimateapi.service.GameService;
 import pl.coderslab.theultimateapi.service.GroupService;
 import pl.coderslab.theultimateapi.service.TeamService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -86,6 +90,15 @@ public class InitialController {
     public String addThirdGroupGames () {
         gameService.addThirdGroupGames();
         return "Third group games added to schedule";
+    }
+
+    @GetMapping("/playGames/saturday/{hourOfGame}")
+    @ResponseBody
+    public String playGames(@PathVariable String hourOfGame) {
+        Integer hour = Integer.parseInt(hourOfGame);
+        LocalDateTime gameTime = LocalDateTime.of(2018, 9, 17, hour, 0);
+        gameService.playGames(gameTime);
+        return "Games have been played";
     }
 
 

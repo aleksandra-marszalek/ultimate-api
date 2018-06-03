@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 @Service
 public class GameServiceImpl implements GameService{
@@ -185,10 +186,43 @@ public class GameServiceImpl implements GameService{
     }
 
 
+
+
     //////////// to api ///////////////
-    
+
     public ArrayList<JSONObject> getAllGames() {
         return games;
+    }
+
+    @Override
+    public void playGames(LocalDateTime gameTime) {
+        List<Game> allPlaned = gameRepository.findAllByStatus(0);
+        Random random = new Random();
+        for (Game g: allPlaned) {
+            if (g.getGameTime().isEqual(gameTime)){
+                g.setPointsTeam1(random.nextInt(15));
+                g.setPointsTeam2(random.nextInt(15));
+                while (g.getPointsTeam1()==g.getPointsTeam2()){
+                    g.setPointsTeam2(random.nextInt(15));
+                }
+                if (g.getPointsTeam1()>g.getPointsTeam2()) {
+                    if (g.getTeam1().getSeeding()>g.getTeam2().getSeeding()) {
+                        g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                        g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                    }
+                } else {
+                    if (g.getTeam1().getSeeding()<g.getTeam2().getSeeding()) {
+                        g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                        g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                    }
+                }
+                teamRepository.save(g.getTeam1());
+                teamRepository.save(g.getTeam2());
+                gameRepository.save(g);
+            }
+        }
+
+
     }
 
     private ArrayList<JSONObject> games = new ArrayList<>();
