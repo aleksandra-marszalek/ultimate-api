@@ -25,6 +25,8 @@ public class Team {
     @ManyToOne
     private Group group;
 
+    private int placeInGroup;
+
     public Team() {
     }
 
@@ -82,5 +84,13 @@ public class Team {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public int getPlaceInGroup() {
+        return placeInGroup;
+    }
+
+    public void setPlaceInGroup(int placeInGroup) {
+        this.placeInGroup = placeInGroup;
     }
 }

@@ -51,6 +51,7 @@ public class TeamServiceImpl implements TeamService {
 
 
 
+
     /////////////// initial ///////////////
 
 
@@ -80,6 +81,19 @@ public class TeamServiceImpl implements TeamService {
         teamRepository.save(team);
         } else {
             team.setGroup(groupD);
+            teamRepository.save(team);
+        }
+        if (seeding==1 || seeding==2 || seeding==3 || seeding==4) {
+            team.setPlaceInGroup(1);
+            teamRepository.save(team);
+        } else if (seeding==5 || seeding==6 || seeding==7 || seeding==8) {
+            team.setPlaceInGroup(2);
+            teamRepository.save(team);
+        } else if (seeding==9 || seeding==10 || seeding==11 || seeding==12) {
+            team.setPlaceInGroup(3);
+            teamRepository.save(team);
+        } else {
+            team.setPlaceInGroup(4);
             teamRepository.save(team);
         }
     }

@@ -1,8 +1,10 @@
 package pl.coderslab.theultimateapi.service;
 
+import org.json.JSONObject;
 import pl.coderslab.theultimateapi.entity.Game;
 import pl.coderslab.theultimateapi.entity.Team;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface GameService {
@@ -20,4 +22,7 @@ public interface GameService {
     public void saveAll(List<Game> games);
 
     public List<Game> findAllByTeam(Team team);
+
+    public void addFirstGames ();
+
 }

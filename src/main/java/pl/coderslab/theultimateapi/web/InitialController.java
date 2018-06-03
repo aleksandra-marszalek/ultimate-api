@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.theultimateapi.entity.Team;
+import pl.coderslab.theultimateapi.service.GameService;
 import pl.coderslab.theultimateapi.service.GroupService;
 import pl.coderslab.theultimateapi.service.TeamService;
 
@@ -20,6 +21,9 @@ public class InitialController {
 
     @Autowired
     GroupService groupService;
+
+    @Autowired
+    GameService gameService;
 
     @GetMapping("/addTeams")
     @ResponseBody
@@ -62,5 +66,14 @@ public class InitialController {
         }
         return "Teams added to groups";
     }
+
+    @GetMapping("/addFirstGames")
+    @ResponseBody
+    public String addFirstGames () {
+        gameService.addFirstGames();
+        return "First games added to schedule";
+    }
+
+
 
 }

@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.coderslab.theultimateapi.entity.Game;
+import pl.coderslab.theultimateapi.entity.Group;
 import pl.coderslab.theultimateapi.entity.Team;
 import pl.coderslab.theultimateapi.repository.GameRepository;
+import pl.coderslab.theultimateapi.repository.GroupRepository;
+import pl.coderslab.theultimateapi.repository.TeamRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,47 @@ public class GameServiceImpl implements GameService{
 
     @Autowired
     GameRepository gameRepository;
+
+    @Autowired
+    TeamRepository teamRepository;
+
+    @Autowired
+    GroupRepository groupRepository;
+
+    /////////// initial //////////////
+
+    @Override
+    public void addFirstGames() {
+        for (Group g: groupRepository.findAll()) {
+            Game game1 = new Game();
+            Game game2 = new Game();
+            List<Team> groupTeams = g.getTeams();
+            for (Team t: groupTeams) {
+                if (t.getPlaceInGroup()==1) {
+                    game1.setTeam1(t);
+                } else if (t.getPlaceInGroup()==2) {
+                    game2.setTeam1(t);
+                } else if (t.getPlaceInGroup()==3) {
+                    game2.setTeam2(t);
+                } else {
+                    game1.setTeam2(t);
+                }
+            }
+            game1.setOddsForTeam1(game1.getTeam1().getStrength()/(game1.getTeam1().getStrength()+game1.getTeam2().getStrength()));
+            game1.setOddsForTeam2(game1.getTeam2().getStrength()/(game1.getTeam1().getStrength()+game1.getTeam2().getStrength()));
+            game2.setOddsForTeam1(game2.getTeam1().getStrength()/(game2.getTeam1().getStrength()+game2.getTeam2().getStrength()));
+            game2.setOddsForTeam2(game2.getTeam2().getStrength()/(game2.getTeam1().getStrength()+game2.getTeam2().getStrength()));
+            game1.setStatus(0);
+            game2.setStatus(0);
+            gameRepository.save(game1);
+            gameRepository.save(game2);
+        }
+    }
+
+
+
+
+    /////////// crud ///////////////
 
     @Override
     public List<Game> findAll() {
@@ -64,6 +108,8 @@ public class GameServiceImpl implements GameService{
         return allGames;
     }
 
+
+    //////////// to api ///////////////
 
 //    GameServiceImpl() throws JSONException{ this.regenerate();
 //    }
