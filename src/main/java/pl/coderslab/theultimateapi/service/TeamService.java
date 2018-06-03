@@ -21,4 +21,6 @@ public interface TeamService {
 
     public void addToGroupBySeeding (Team team);
 
+    public List<Team> findAllByGroup(Group group);
+
 }

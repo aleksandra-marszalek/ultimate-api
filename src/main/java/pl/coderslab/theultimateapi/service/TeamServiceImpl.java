@@ -43,6 +43,7 @@ public class TeamServiceImpl implements TeamService {
             oJsonInner.put("name", t.getName());
             oJsonInner.put("seeding", t.getSeeding());
             oJsonInner.put("strength", t.getStrength());
+            oJsonInner.put("group", t.getGroup().getName());
             teams.add(oJsonInner);
         }
     }
@@ -60,6 +61,9 @@ public class TeamServiceImpl implements TeamService {
         team.setName(name);
         team.setStrength(strength);
         team.setSeeding(seeding);
+        team.setLost(0);
+        team.setWon(0);
+        team.setPointBalance(0);
         teamRepository.save(team);
     }
 
@@ -98,6 +102,8 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
+
+
     ////////////// crud //////////////////
 
     @Override
@@ -113,6 +119,11 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void updateTeam(Team team) {
         teamRepository.save(team);
+    }
+
+    @Override
+    public List<Team> findAllByGroup(Group group) {
+        return teamRepository.findAllByGroup(group);
     }
 
 

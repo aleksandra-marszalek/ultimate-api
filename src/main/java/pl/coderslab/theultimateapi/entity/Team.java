@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Team {
+public class Team implements Comparable<Team>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +26,12 @@ public class Team {
     private Group group;
 
     private int placeInGroup;
+
+    private int won;
+
+    private int lost;
+
+    private int pointBalance;
 
     public Team() {
     }
@@ -92,5 +98,48 @@ public class Team {
 
     public void setPlaceInGroup(int placeInGroup) {
         this.placeInGroup = placeInGroup;
+    }
+
+    public int getWon() {
+        return won;
+    }
+
+    public void setWon(int won) {
+        this.won = won;
+    }
+
+    public int getLost() {
+        return lost;
+    }
+
+    public void setLost(int lost) {
+        this.lost = lost;
+    }
+
+    public int getPointBalance() {
+        return pointBalance;
+    }
+
+    public void setPointBalance(int pointBalance) {
+        this.pointBalance = pointBalance;
+    }
+
+    @Override
+    public int compareTo(Team team) {
+        if (this.getWon()>team.getWon()) {
+            return 1;
+        } else if (this.getWon()<team.getWon()) {
+            return -1;
+        } else {
+            if (this.getPointBalance()>team.getPointBalance()) {
+                return 1;
+            } else if (this.getPointBalance()<team.getPointBalance()){
+                return -1;
+            } if (this.getSeeding()>team.getSeeding()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
     }
 }

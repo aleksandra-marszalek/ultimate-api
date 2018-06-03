@@ -14,10 +14,7 @@ import pl.coderslab.theultimateapi.repository.GroupRepository;
 import pl.coderslab.theultimateapi.repository.TeamRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class GameServiceImpl implements GameService{
@@ -138,6 +135,21 @@ public class GameServiceImpl implements GameService{
         }
     }
 
+    public void setPlacesAfterGroupStage () {
+        List<Group> allGroups = groupRepository.findAll();
+        for (Group g: allGroups) {
+            List<Team> groupTeams = teamRepository.findAllByGroup(g);
+            Team[] groupArray = groupTeams.toArray(new Team[groupTeams.size()]);
+            Arrays.sort(groupArray);
+            groupArray[0].setPlaceInGroup(4);
+            groupArray[1].setPlaceInGroup(3);
+            groupArray[2].setPlaceInGroup(2);
+            groupArray[3].setPlaceInGroup(1);
+            groupRepository.save(g);
+        }
+
+    }
+
 
     /////////// crud ///////////////
 
@@ -190,9 +202,6 @@ public class GameServiceImpl implements GameService{
 
     //////////// to api ///////////////
 
-    public ArrayList<JSONObject> getAllGames() {
-        return games;
-    }
 
     @Override
     public void playGames(LocalDateTime gameTime) {
@@ -206,18 +215,29 @@ public class GameServiceImpl implements GameService{
                     g.setPointsTeam2(random.nextInt(15));
                 }
                 if (g.getPointsTeam1()>g.getPointsTeam2()) {
-                    if (g.getTeam1().getSeeding()>g.getTeam2().getSeeding()) {
+                    g.getTeam1().setWon(g.getTeam1().getWon()+1);
+                    g.getTeam1().setPointBalance(g.getTeam1().getPointBalance()+(g.getPointsTeam1()-g.getPointsTeam2()));
+                    g.getTeam2().setLost(g.getTeam2().getLost()+1);
+                    g.getTeam2().setPointBalance(g.getTeam2().getPointBalance()-(g.getPointsTeam1()-g.getPointsTeam2()));
+                    if (g.getTeam1().getStrength()<g.getTeam2().getStrength()) {
                         g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
                         g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
                     }
                 } else {
-                    if (g.getTeam1().getSeeding()<g.getTeam2().getSeeding()) {
+                    g.getTeam2().setWon(g.getTeam2().getWon()+1);
+                    g.getTeam2().setPointBalance(g.getTeam2().getPointBalance()+(g.getPointsTeam2()-g.getPointsTeam1()));
+                    g.getTeam1().setLost(g.getTeam1().getLost()+1);
+                    g.getTeam1().setPointBalance(g.getTeam1().getPointBalance()-(g.getPointsTeam2()-g.getPointsTeam1()));
+                    if (g.getTeam1().getStrength()>g.getTeam2().getStrength()) {
                         g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
                         g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
                     }
                 }
+                g.setOddsForTeam1(getOddsForTeam1(g));
+                g.setOddsForTeam2(getOddsForTeam2(g));
                 teamRepository.save(g.getTeam1());
                 teamRepository.save(g.getTeam2());
+                g.setStatus(1);
                 gameRepository.save(g);
             }
         }
@@ -225,21 +245,50 @@ public class GameServiceImpl implements GameService{
 
     }
 
+    public ArrayList<JSONObject> getAllGames() {
+        return games;
+    }
+
     private ArrayList<JSONObject> games = new ArrayList<>();
 
     @Scheduled(fixedRate = 5000)
     public void regenerate() throws JSONException {
         games.clear();
-//        List<Team> allTeams = teamRepository.findAll();
-//        for (Team t: allTeams) {
-//            JSONObject oJsonInner = new JSONObject();
-//            oJsonInner.put("id", t.getId());
-//            oJsonInner.put("name", t.getName());
-//            oJsonInner.put("seeding", t.getSeeding());
-//            oJsonInner.put("strength", t.getStrength());
-//            teams.add(oJsonInner);
-//        }
         List<Game> allGames = gameRepository.findAll();
+        newJSONObject(allGames, games);
+
+    }
+
+    public ArrayList<JSONObject> getScheduledGames() {
+        return scheduledGames;
+    }
+
+    private ArrayList<JSONObject> scheduledGames = new ArrayList<>();
+
+    @Scheduled(fixedRate = 5000)
+    public void regenerateScheduled() throws JSONException {
+        scheduledGames.clear();
+        List<Game> allGames = gameRepository.findAllByStatus(0);
+        newJSONObject(allGames, scheduledGames);
+
+    }
+
+
+    public ArrayList<JSONObject> getFinishedGames() {
+        return finishedGames;
+    }
+
+    private ArrayList<JSONObject> finishedGames = new ArrayList<>();
+
+    @Scheduled(fixedRate = 5000)
+    public void regenerateFinished() throws JSONException {
+        finishedGames.clear();
+        List<Game> allGames = gameRepository.findAllByStatus(1);
+        newJSONObject(allGames, finishedGames);
+
+    }
+
+    public void newJSONObject(List<Game> allGames, ArrayList<JSONObject> games) {
         for (Game g: allGames) {
             JSONObject oJsonInner = new JSONObject();
             oJsonInner.put("id", g.getId());
@@ -249,21 +298,21 @@ public class GameServiceImpl implements GameService{
             oJsonInner.put("oddsForTeam1", g.getOddsForTeam1());
             oJsonInner.put("oddsForTeam2", g.getOddsForTeam2());
             oJsonInner.put("status", g.getStatus());
-            oJsonInner.put("team1", g.getTeam1());
-            oJsonInner.put("team2", g.getTeam2());
+            JSONObject team1 = new JSONObject();
+            team1.put("id", g.getTeam1().getId());
+            team1.put("name",  g.getTeam1().getName());
+            team1.put("seeding", g.getTeam1().getSeeding());
+            team1.put("strength", g.getTeam1().getStrength());
+            JSONObject team2 = new JSONObject();
+            team2.put("id", g.getTeam2().getId());
+            team2.put("name",  g.getTeam2().getName());
+            team2.put("seeding", g.getTeam2().getSeeding());
+            team2.put("strength", g.getTeam2().getStrength());
+            oJsonInner.put("team1", team1);
+            oJsonInner.put("team2", team2);
             games.add(oJsonInner);
         }
-//        for (int i = 0; i < 10; i++) {
-//            JSONObject oJsonInner = new JSONObject();
-//            oJsonInner.put("firstTeam", faker.team().name());
-//            oJsonInner.put("firstPoints", faker.number().randomDigitNotZero());
-//            oJsonInner.put("secondTeam", faker.team().name());
-//            oJsonInner.put("secondPoints", faker.number().randomDigitNotZero());
-//            games.add(oJsonInner);
-//        }
     }
-
-
 
 
 }

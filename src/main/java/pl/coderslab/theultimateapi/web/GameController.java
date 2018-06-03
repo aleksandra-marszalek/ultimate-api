@@ -20,4 +20,16 @@ public class GameController {
     public String getAllGames() {
         return gameService.getAllGames().toString();
     }
+
+    @GetMapping(path= "/get-scheduled-games")
+    @ResponseBody
+    public String getScheduledGames() {
+        return gameService.getScheduledGames().toString();
+    }
+
+    @GetMapping(path= "/get-finished-games")
+    @ResponseBody
+    public String getFinishedGames() {
+        return gameService.getFinishedGames().toString();
+    }
 }

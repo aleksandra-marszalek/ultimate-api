@@ -32,6 +32,12 @@ public interface GameService {
 
     public ArrayList<JSONObject> getAllGames();
 
+    public ArrayList<JSONObject> getScheduledGames();
+
+    public ArrayList<JSONObject> getFinishedGames();
+
     public void playGames(LocalDateTime gameTime);
+
+    public void setPlacesAfterGroupStage ();
 
 }

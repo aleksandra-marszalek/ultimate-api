@@ -101,6 +101,13 @@ public class InitialController {
         return "Games have been played";
     }
 
+    @GetMapping("setPlacesInGroups")
+    @ResponseBody
+    public String setPlacesInGroups () {
+        gameService.setPlacesAfterGroupStage();
+        return "The places has been set";
+    }
+
 
 
 }
