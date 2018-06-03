@@ -19,9 +19,9 @@ public class Game {
     @JoinColumn(name = "team2_id")
     private Team team2;
 
-    private int goalsTeam1;
+    private int pointsTeam1;
 
-    private int goalsTeam2;
+    private int pointsTeam2;
 
     private LocalDateTime gameTime;
 
@@ -58,20 +58,20 @@ public class Game {
         this.team2 = team2;
     }
 
-    public int getGoalsTeam1() {
-        return goalsTeam1;
+    public int getPointsTeam1() {
+        return pointsTeam1;
     }
 
-    public void setGoalsTeam1(int goalsTeam1) {
-        this.goalsTeam1 = goalsTeam1;
+    public void setPointsTeam1(int pointsTeam1) {
+        this.pointsTeam1 = pointsTeam1;
     }
 
-    public int getGoalsTeam2() {
-        return goalsTeam2;
+    public int getPointsTeam2() {
+        return pointsTeam2;
     }
 
-    public void setGoalsTeam2(int goalsTeam2) {
-        this.goalsTeam2 = goalsTeam2;
+    public void setPointsTeam2(int pointsTeam2) {
+        this.pointsTeam2 = pointsTeam2;
     }
 
     public LocalDateTime getGameTime() {

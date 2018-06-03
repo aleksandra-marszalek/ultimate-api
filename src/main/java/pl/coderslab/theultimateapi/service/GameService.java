@@ -29,4 +29,6 @@ public interface GameService {
 
     public void addThirdGroupGames ();
 
+    public ArrayList<JSONObject> getAllGames();
+
 }
