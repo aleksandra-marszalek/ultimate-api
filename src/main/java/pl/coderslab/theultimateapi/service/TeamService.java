@@ -23,4 +23,6 @@ public interface TeamService {
 
     public List<Team> findAllByGroup(Group group);
 
+    Team findTeamByGroupAndPlaceInGroup (Group group, int placeInGroup);
+
 }

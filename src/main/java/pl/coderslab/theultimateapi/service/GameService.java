@@ -40,4 +40,6 @@ public interface GameService {
 
     public void setPlacesAfterGroupStage ();
 
+    public void addQuarterFinals ();
+
 }

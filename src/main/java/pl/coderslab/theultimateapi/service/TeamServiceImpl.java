@@ -126,5 +126,10 @@ public class TeamServiceImpl implements TeamService {
         return teamRepository.findAllByGroup(group);
     }
 
+    @Override
+    public Team findTeamByGroupAndPlaceInGroup(Group group, int placeInGroup) {
+        return teamRepository.findTeamByGroupAndPlaceInGroup(group, placeInGroup);
+    }
+
 
 }

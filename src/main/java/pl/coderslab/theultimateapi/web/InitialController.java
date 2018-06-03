@@ -108,6 +108,13 @@ public class InitialController {
         return "The places has been set";
     }
 
+    @GetMapping("/addQuarterFinals")
+    @ResponseBody
+    public String addQuarterFinals () {
+        gameService.addQuarterFinals();
+        return "Quarterfinal games added to schedule";
+    }
+
 
 
 }

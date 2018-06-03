@@ -150,6 +150,67 @@ public class GameServiceImpl implements GameService{
 
     }
 
+    public void addQuarterFinals () {
+        Game game1 = new Game();
+        Game game2 = new Game();
+        Game game3 = new Game();
+        Game game4 = new Game();
+        Game game5 = new Game();
+        Game game6 = new Game();
+        Game game7 = new Game();
+        Game game8 = new Game();
+        game1.setTeam1(getTeamByGroupAndPlace("A", 1));
+        game1.setTeam2(getTeamByGroupAndPlace("D", 2));
+        game2.setTeam1(getTeamByGroupAndPlace("B", 1));
+        game2.setTeam2(getTeamByGroupAndPlace("C", 2));
+        game3.setTeam1(getTeamByGroupAndPlace("A", 2));
+        game3.setTeam2(getTeamByGroupAndPlace("D", 1));
+        game4.setTeam1(getTeamByGroupAndPlace("B", 2));
+        game4.setTeam2(getTeamByGroupAndPlace("C", 1));
+        game5.setTeam1(getTeamByGroupAndPlace("A", 3));
+        game5.setTeam2(getTeamByGroupAndPlace("D", 4));
+        game6.setTeam1(getTeamByGroupAndPlace("B", 3));
+        game6.setTeam2(getTeamByGroupAndPlace("C", 4));
+        game7.setTeam1(getTeamByGroupAndPlace("A", 4));
+        game7.setTeam2(getTeamByGroupAndPlace("D", 3));
+        game8.setTeam1(getTeamByGroupAndPlace("B", 4));
+        game8.setTeam2(getTeamByGroupAndPlace("C", 3));
+        List<Game> allGames1 = new ArrayList<>();
+        List<Game> allGames2 = new ArrayList<>();
+        allGames1.add(game1);
+        allGames1.add(game2);
+        allGames1.add(game3);
+        allGames1.add(game4);
+        allGames2.add(game5);
+        allGames2.add(game6);
+        allGames2.add(game7);
+        allGames2.add(game8);
+        for (Game game: allGames1) {
+            game.setOddsForTeam1(getOddsForTeam1(game));
+            game.setOddsForTeam2(getOddsForTeam2(game));
+            game.setStatus(0);
+            LocalDateTime date = LocalDateTime.of(2018, 9, 17, 16, 0);
+            game.setGameTime(date);
+            gameRepository.save(game);
+        }
+        for (Game game: allGames2) {
+            game.setOddsForTeam1(getOddsForTeam1(game));
+            game.setOddsForTeam2(getOddsForTeam2(game));
+            game.setStatus(0);
+            LocalDateTime date = LocalDateTime.of(2018, 9, 17, 17, 0);
+            game.setGameTime(date);
+            gameRepository.save(game);
+        }
+
+
+
+
+    }
+
+    public Team getTeamByGroupAndPlace(String a, int i) {
+        return teamRepository.findTeamByGroupAndPlaceInGroup(groupRepository.findGroupByName(a), i);
+    }
+
 
     /////////// crud ///////////////
 
