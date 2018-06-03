@@ -274,10 +274,10 @@ public class GameServiceImpl implements GameService{
                 if (g.getPointsTeam1()>g.getPointsTeam2()) {
                     g.getTeam1().setWon(g.getTeam1().getWon()+1);
                     g.getTeam1().setPointBalance(g.getTeam1().getPointBalance()+(g.getPointsTeam1()-g.getPointsTeam2()));
-                    g.getTeam1().setLoserWinerSignature("winner");
+                    g.getTeam1().setLoserWinerSignature(g.getSignature()+"winner");
                     g.getTeam2().setLost(g.getTeam2().getLost()+1);
                     g.getTeam2().setPointBalance(g.getTeam2().getPointBalance()-(g.getPointsTeam1()-g.getPointsTeam2()));
-                    g.getTeam2().setLoserWinerSignature("loser");
+                    g.getTeam2().setLoserWinerSignature(g.getSignature()+"loser");
                     if (g.getTeam1().getStrength()<g.getTeam2().getStrength()) {
                         g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
                         g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
@@ -285,10 +285,10 @@ public class GameServiceImpl implements GameService{
                 } else {
                     g.getTeam2().setWon(g.getTeam2().getWon()+1);
                     g.getTeam2().setPointBalance(g.getTeam2().getPointBalance()+(g.getPointsTeam2()-g.getPointsTeam1()));
-                    g.getTeam2().setLoserWinerSignature("winner");
+                    g.getTeam2().setLoserWinerSignature(g.getSignature()+"winner");
                     g.getTeam1().setLost(g.getTeam1().getLost()+1);
                     g.getTeam1().setPointBalance(g.getTeam1().getPointBalance()-(g.getPointsTeam2()-g.getPointsTeam1()));
-                    g.getTeam1().setLoserWinerSignature("loser");
+                    g.getTeam1().setLoserWinerSignature(g.getSignature()+"loser");
                     if (g.getTeam1().getStrength()>g.getTeam2().getStrength()) {
                         g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
                         g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
