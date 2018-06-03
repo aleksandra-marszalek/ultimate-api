@@ -23,6 +23,10 @@ public interface GameService {
 
     public List<Game> findAllByTeam(Team team);
 
-    public void addFirstGames ();
+    public void addFirstGroupGames ();
+
+    public void addSecondGroupGames ();
+
+    public void addThirdGroupGames ();
 
 }

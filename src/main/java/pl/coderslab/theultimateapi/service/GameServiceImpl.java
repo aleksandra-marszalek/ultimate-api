@@ -31,8 +31,17 @@ public class GameServiceImpl implements GameService{
 
     /////////// initial //////////////
 
+
+    public double getOddsForTeam2(Game game1) {
+        return game1.getTeam2().getStrength()/(game1.getTeam1().getStrength()+game1.getTeam2().getStrength());
+    }
+
+    public double getOddsForTeam1(Game game) {
+        return game.getTeam1().getStrength()/(game.getTeam1().getStrength()+game.getTeam2().getStrength());
+    }
+
     @Override
-    public void addFirstGames() {
+    public void addFirstGroupGames() {
         for (Group g: groupRepository.findAll()) {
             Game game1 = new Game();
             Game game2 = new Game();
@@ -48,10 +57,10 @@ public class GameServiceImpl implements GameService{
                     game1.setTeam2(t);
                 }
             }
-            game1.setOddsForTeam1(game1.getTeam1().getStrength()/(game1.getTeam1().getStrength()+game1.getTeam2().getStrength()));
-            game1.setOddsForTeam2(game1.getTeam2().getStrength()/(game1.getTeam1().getStrength()+game1.getTeam2().getStrength()));
-            game2.setOddsForTeam1(game2.getTeam1().getStrength()/(game2.getTeam1().getStrength()+game2.getTeam2().getStrength()));
-            game2.setOddsForTeam2(game2.getTeam2().getStrength()/(game2.getTeam1().getStrength()+game2.getTeam2().getStrength()));
+            game1.setOddsForTeam1(getOddsForTeam1(game1));
+            game1.setOddsForTeam2(getOddsForTeam2(game1));
+            game2.setOddsForTeam1(getOddsForTeam1(game2));
+            game2.setOddsForTeam2(getOddsForTeam2(game2));
             game1.setStatus(0);
             game2.setStatus(0);
             gameRepository.save(game1);
@@ -59,7 +68,61 @@ public class GameServiceImpl implements GameService{
         }
     }
 
+    @Override
+    public void addSecondGroupGames() {
+        for (Group g: groupRepository.findAll()) {
+            Game game1 = new Game();
+            Game game2 = new Game();
+            List<Team> groupTeams = g.getTeams();
+            for (Team t: groupTeams) {
+                if (t.getPlaceInGroup()==1) {
+                    game1.setTeam1(t);
+                } else if (t.getPlaceInGroup()==2) {
+                    game2.setTeam1(t);
+                } else if (t.getPlaceInGroup()==3) {
+                    game1.setTeam2(t);
+                } else {
+                    game2.setTeam2(t);
+                }
+            }
+            game1.setOddsForTeam1(getOddsForTeam1(game1));
+            game1.setOddsForTeam2(getOddsForTeam2(game1));
+            game2.setOddsForTeam1(getOddsForTeam1(game2));
+            game2.setOddsForTeam2(getOddsForTeam2(game2));
+            game1.setStatus(0);
+            game2.setStatus(0);
+            gameRepository.save(game1);
+            gameRepository.save(game2);
+        }
+    }
 
+    @Override
+    public void addThirdGroupGames() {
+        for (Group g: groupRepository.findAll()) {
+            Game game1 = new Game();
+            Game game2 = new Game();
+            List<Team> groupTeams = g.getTeams();
+            for (Team t: groupTeams) {
+                if (t.getPlaceInGroup()==1) {
+                    game1.setTeam1(t);
+                } else if (t.getPlaceInGroup()==2) {
+                    game1.setTeam2(t);
+                } else if (t.getPlaceInGroup()==3) {
+                    game2.setTeam1(t);
+                } else {
+                    game2.setTeam2(t);
+                }
+            }
+            game1.setOddsForTeam1(getOddsForTeam1(game1));
+            game1.setOddsForTeam2(getOddsForTeam2(game1));
+            game2.setOddsForTeam1(getOddsForTeam1(game2));
+            game2.setOddsForTeam2(getOddsForTeam2(game2));
+            game1.setStatus(0);
+            game2.setStatus(0);
+            gameRepository.save(game1);
+            gameRepository.save(game2);
+        }
+    }
 
 
     /////////// crud ///////////////

@@ -67,11 +67,25 @@ public class InitialController {
         return "Teams added to groups";
     }
 
-    @GetMapping("/addFirstGames")
+    @GetMapping("/addFirstGroupGames")
     @ResponseBody
-    public String addFirstGames () {
-        gameService.addFirstGames();
-        return "First games added to schedule";
+    public String addFirstGroupGames () {
+        gameService.addFirstGroupGames();
+        return "First group games added to schedule";
+    }
+
+    @GetMapping("/addSecondGroupGames")
+    @ResponseBody
+    public String addSecondGroupGames () {
+        gameService.addSecondGroupGames();
+        return "Second group games added to schedule";
+    }
+
+    @GetMapping("/addThirdGroupGames")
+    @ResponseBody
+    public String addThirdGroupGames () {
+        gameService.addThirdGroupGames();
+        return "Third group games added to schedule";
     }
 
 
