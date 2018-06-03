@@ -12,9 +12,9 @@ public class GameController {
     @Autowired
     GameServiceImpl gameService;
 
-    @GetMapping(path= "/get-matches")
-    @ResponseBody
-    public String sample() {
-        return gameService.getMatches().toString();
-    }
+//    @GetMapping(path= "/get-matches")
+//    @ResponseBody
+////    public String sample() {
+//        return gameService.getMatches().toString();
+//    }
 }

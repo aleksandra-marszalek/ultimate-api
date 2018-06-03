@@ -5,7 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import pl.coderslab.theultimateapi.entity.Team;
+import pl.coderslab.theultimateapi.service.GroupService;
 import pl.coderslab.theultimateapi.service.TeamService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/init")
@@ -13,6 +17,9 @@ public class InitialController {
 
     @Autowired
     TeamService teamService;
+
+    @Autowired
+    GroupService groupService;
 
     @GetMapping("/addTeams")
     @ResponseBody
@@ -35,4 +42,25 @@ public class InitialController {
         teamService.addTeamToDb("Mad Hatters MOSiR Płock", 1.0, 16);
         return "Teams added";
     }
+
+    @GetMapping("/addGroups")
+    @ResponseBody
+    public String addGroups () {
+        groupService.addGroupToDb("A");
+        groupService.addGroupToDb("B");
+        groupService.addGroupToDb("C");
+        groupService.addGroupToDb("D");
+        return "Groups added";
+    }
+
+    @GetMapping("/addTeamsToGroups")
+    @ResponseBody
+    public String addTeamsToGroups () {
+        List<Team> teams = teamService.findAll();
+        for (Team t: teams) {
+            teamService.addToGroupBySeeding(t);
+        }
+        return "Teams added to groups";
+    }
+
 }

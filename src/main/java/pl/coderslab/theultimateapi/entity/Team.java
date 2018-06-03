@@ -22,6 +22,9 @@ public class Team {
     @OneToMany(mappedBy = "team2")
     private List<Game> gamesAsTeam2;
 
+    @ManyToOne
+    private Group group;
+
     public Team() {
     }
 
@@ -71,5 +74,13 @@ public class Team {
 
     public void setGamesAsTeam2(List<Game> gamesAsTeam2) {
         this.gamesAsTeam2 = gamesAsTeam2;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }
