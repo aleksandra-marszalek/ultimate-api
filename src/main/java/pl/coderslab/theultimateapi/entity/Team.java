@@ -33,6 +33,8 @@ public class Team implements Comparable<Team>{
 
     private int pointBalance;
 
+    private String loserWinerSignature;
+
     public Team() {
     }
 
@@ -122,6 +124,14 @@ public class Team implements Comparable<Team>{
 
     public void setPointBalance(int pointBalance) {
         this.pointBalance = pointBalance;
+    }
+
+    public String getLoserWinerSignature() {
+        return loserWinerSignature;
+    }
+
+    public void setLoserWinerSignature(String loserWinerSignature) {
+        this.loserWinerSignature = loserWinerSignature;
     }
 
     @Override

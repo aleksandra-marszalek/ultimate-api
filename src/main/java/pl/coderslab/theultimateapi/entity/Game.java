@@ -31,6 +31,8 @@ public class Game {
 
     private int status;
 
+    private String signature;
+
     public Game() {
     }
 
@@ -104,5 +106,13 @@ public class Game {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

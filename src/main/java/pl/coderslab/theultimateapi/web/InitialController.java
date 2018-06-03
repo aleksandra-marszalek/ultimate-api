@@ -115,6 +115,15 @@ public class InitialController {
         return "Quarterfinal games added to schedule";
     }
 
+    @GetMapping("/playFinals/saturday/{hourOfGame}")
+    @ResponseBody
+    public String playFinals(@PathVariable String hourOfGame) {
+        Integer hour = Integer.parseInt(hourOfGame);
+        LocalDateTime gameTime = LocalDateTime.of(2018, 9, 17, hour, 0);
+        gameService.playGames(gameTime);
+        return "Games have been played";
+    }
+
 
 
 }

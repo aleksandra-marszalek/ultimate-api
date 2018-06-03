@@ -161,20 +161,28 @@ public class GameServiceImpl implements GameService{
         Game game8 = new Game();
         game1.setTeam1(getTeamByGroupAndPlace("A", 1));
         game1.setTeam2(getTeamByGroupAndPlace("D", 2));
+        game1.setSignature("A1");
         game2.setTeam1(getTeamByGroupAndPlace("B", 1));
         game2.setTeam2(getTeamByGroupAndPlace("C", 2));
+        game2.setSignature("B1");
         game3.setTeam1(getTeamByGroupAndPlace("A", 2));
         game3.setTeam2(getTeamByGroupAndPlace("D", 1));
+        game3.setSignature("C1");
         game4.setTeam1(getTeamByGroupAndPlace("B", 2));
         game4.setTeam2(getTeamByGroupAndPlace("C", 1));
+        game4.setSignature("D1");
         game5.setTeam1(getTeamByGroupAndPlace("A", 3));
         game5.setTeam2(getTeamByGroupAndPlace("D", 4));
+        game5.setSignature("A2");
         game6.setTeam1(getTeamByGroupAndPlace("B", 3));
         game6.setTeam2(getTeamByGroupAndPlace("C", 4));
+        game6.setSignature("B2");
         game7.setTeam1(getTeamByGroupAndPlace("A", 4));
         game7.setTeam2(getTeamByGroupAndPlace("D", 3));
+        game7.setSignature("C2");
         game8.setTeam1(getTeamByGroupAndPlace("B", 4));
         game8.setTeam2(getTeamByGroupAndPlace("C", 3));
+        game8.setSignature("D2");
         List<Game> allGames1 = new ArrayList<>();
         List<Game> allGames2 = new ArrayList<>();
         allGames1.add(game1);
@@ -210,6 +218,95 @@ public class GameServiceImpl implements GameService{
     public Team getTeamByGroupAndPlace(String a, int i) {
         return teamRepository.findTeamByGroupAndPlaceInGroup(groupRepository.findGroupByName(a), i);
     }
+
+    @Override
+    public void playGames(LocalDateTime gameTime) {
+        List<Game> allPlaned = gameRepository.findAllByStatus(0);
+        Random random = new Random();
+        for (Game g: allPlaned) {
+            if (g.getGameTime().isEqual(gameTime)){
+                g.setPointsTeam1(random.nextInt(15));
+                g.setPointsTeam2(random.nextInt(15));
+                while (g.getPointsTeam1()==g.getPointsTeam2()){
+                    g.setPointsTeam2(random.nextInt(15));
+                }
+                if (g.getPointsTeam1()>g.getPointsTeam2()) {
+                    g.getTeam1().setWon(g.getTeam1().getWon()+1);
+                    g.getTeam1().setPointBalance(g.getTeam1().getPointBalance()+(g.getPointsTeam1()-g.getPointsTeam2()));
+                    g.getTeam2().setLost(g.getTeam2().getLost()+1);
+                    g.getTeam2().setPointBalance(g.getTeam2().getPointBalance()-(g.getPointsTeam1()-g.getPointsTeam2()));
+                    if (g.getTeam1().getStrength()<g.getTeam2().getStrength()) {
+                        g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                        g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                    }
+                } else {
+                    g.getTeam2().setWon(g.getTeam2().getWon()+1);
+                    g.getTeam2().setPointBalance(g.getTeam2().getPointBalance()+(g.getPointsTeam2()-g.getPointsTeam1()));
+                    g.getTeam1().setLost(g.getTeam1().getLost()+1);
+                    g.getTeam1().setPointBalance(g.getTeam1().getPointBalance()-(g.getPointsTeam2()-g.getPointsTeam1()));
+                    if (g.getTeam1().getStrength()>g.getTeam2().getStrength()) {
+                        g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                        g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                    }
+                }
+                g.setOddsForTeam1(getOddsForTeam1(g));
+                g.setOddsForTeam2(getOddsForTeam2(g));
+                teamRepository.save(g.getTeam1());
+                teamRepository.save(g.getTeam2());
+                g.setStatus(1);
+                gameRepository.save(g);
+            }
+        }
+
+    }
+
+    @Override
+    public void playFinals(LocalDateTime gameTime) {
+        List<Game> allPlaned = gameRepository.findAllByStatus(0);
+        Random random = new Random();
+        for (Game g: allPlaned) {
+            if (g.getGameTime().isEqual(gameTime)){
+                g.setPointsTeam1(random.nextInt(15));
+                g.setPointsTeam2(random.nextInt(15));
+                while (g.getPointsTeam1()==g.getPointsTeam2()){
+                    g.setPointsTeam2(random.nextInt(15));
+                }
+                if (g.getPointsTeam1()>g.getPointsTeam2()) {
+                    g.getTeam1().setWon(g.getTeam1().getWon()+1);
+                    g.getTeam1().setPointBalance(g.getTeam1().getPointBalance()+(g.getPointsTeam1()-g.getPointsTeam2()));
+                    g.getTeam1().setLoserWinerSignature("winner");
+                    g.getTeam2().setLost(g.getTeam2().getLost()+1);
+                    g.getTeam2().setPointBalance(g.getTeam2().getPointBalance()-(g.getPointsTeam1()-g.getPointsTeam2()));
+                    g.getTeam2().setLoserWinerSignature("loser");
+                    if (g.getTeam1().getStrength()<g.getTeam2().getStrength()) {
+                        g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                        g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                    }
+                } else {
+                    g.getTeam2().setWon(g.getTeam2().getWon()+1);
+                    g.getTeam2().setPointBalance(g.getTeam2().getPointBalance()+(g.getPointsTeam2()-g.getPointsTeam1()));
+                    g.getTeam2().setLoserWinerSignature("winner");
+                    g.getTeam1().setLost(g.getTeam1().getLost()+1);
+                    g.getTeam1().setPointBalance(g.getTeam1().getPointBalance()-(g.getPointsTeam2()-g.getPointsTeam1()));
+                    g.getTeam1().setLoserWinerSignature("loser");
+                    if (g.getTeam1().getStrength()>g.getTeam2().getStrength()) {
+                        g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                        g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
+                    }
+                }
+                g.setOddsForTeam1(getOddsForTeam1(g));
+                g.setOddsForTeam2(getOddsForTeam2(g));
+                teamRepository.save(g.getTeam1());
+                teamRepository.save(g.getTeam2());
+                g.setStatus(1);
+                gameRepository.save(g);
+            }
+        }
+
+    }
+
+
+
 
 
     /////////// crud ///////////////
@@ -264,47 +361,7 @@ public class GameServiceImpl implements GameService{
     //////////// to api ///////////////
 
 
-    @Override
-    public void playGames(LocalDateTime gameTime) {
-        List<Game> allPlaned = gameRepository.findAllByStatus(0);
-        Random random = new Random();
-        for (Game g: allPlaned) {
-            if (g.getGameTime().isEqual(gameTime)){
-                g.setPointsTeam1(random.nextInt(15));
-                g.setPointsTeam2(random.nextInt(15));
-                while (g.getPointsTeam1()==g.getPointsTeam2()){
-                    g.setPointsTeam2(random.nextInt(15));
-                }
-                if (g.getPointsTeam1()>g.getPointsTeam2()) {
-                    g.getTeam1().setWon(g.getTeam1().getWon()+1);
-                    g.getTeam1().setPointBalance(g.getTeam1().getPointBalance()+(g.getPointsTeam1()-g.getPointsTeam2()));
-                    g.getTeam2().setLost(g.getTeam2().getLost()+1);
-                    g.getTeam2().setPointBalance(g.getTeam2().getPointBalance()-(g.getPointsTeam1()-g.getPointsTeam2()));
-                    if (g.getTeam1().getStrength()<g.getTeam2().getStrength()) {
-                        g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
-                        g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
-                    }
-                } else {
-                    g.getTeam2().setWon(g.getTeam2().getWon()+1);
-                    g.getTeam2().setPointBalance(g.getTeam2().getPointBalance()+(g.getPointsTeam2()-g.getPointsTeam1()));
-                    g.getTeam1().setLost(g.getTeam1().getLost()+1);
-                    g.getTeam1().setPointBalance(g.getTeam1().getPointBalance()-(g.getPointsTeam2()-g.getPointsTeam1()));
-                    if (g.getTeam1().getStrength()>g.getTeam2().getStrength()) {
-                        g.getTeam1().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
-                        g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
-                    }
-                }
-                g.setOddsForTeam1(getOddsForTeam1(g));
-                g.setOddsForTeam2(getOddsForTeam2(g));
-                teamRepository.save(g.getTeam1());
-                teamRepository.save(g.getTeam2());
-                g.setStatus(1);
-                gameRepository.save(g);
-            }
-        }
 
-
-    }
 
     public ArrayList<JSONObject> getAllGames() {
         return games;

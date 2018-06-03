@@ -42,4 +42,7 @@ public interface GameService {
 
     public void addQuarterFinals ();
 
+    public void playFinals(LocalDateTime gameTime);
+
+
 }
