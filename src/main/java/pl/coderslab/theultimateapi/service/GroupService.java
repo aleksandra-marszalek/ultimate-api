@@ -15,4 +15,6 @@ public interface GroupService {
 
     public void addGroupToDb(String name);
 
+    public ArrayList<JSONObject> getGroups();
+
 }
