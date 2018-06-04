@@ -29,6 +29,11 @@ public class InitialController {
     @Autowired
     GameService gameService;
 
+    @GetMapping("/initialization")
+    public String initialize () {
+        return "Initializer";
+    }
+
 
     @GetMapping("/addTeams")
     @ResponseBody

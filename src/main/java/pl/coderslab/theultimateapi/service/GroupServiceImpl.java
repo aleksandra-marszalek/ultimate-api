@@ -34,6 +34,7 @@ public class GroupServiceImpl implements GroupService {
             JSONObject oJsonInner = new JSONObject();
             oJsonInner.put("id", g.getId());
             oJsonInner.put("name", g.getName());
+            ArrayList<JSONObject> teams = new ArrayList<>();
             for (int i=0; i<g.getTeams().size(); i++) {
                 JSONObject team = new JSONObject();
                 Team t = g.getTeams().get(i);
@@ -41,14 +42,15 @@ public class GroupServiceImpl implements GroupService {
                 team.put("name", t.getName());
                 team.put("seeding", t.getSeeding());
                 team.put("strength", t.getStrength());
-                team.put("group", t.getGroup().getName());
+//                team.put("group", t.getGroup().getName());
                 team.put("placeInGroup", t.getPlaceInGroup());
                 team.put("won", t.getWon());
                 team.put("lost", t.getLost());
                 team.put("pointBalance", t.getPointBalance());
                 team.put("finalStanding", t.getFinalStanding());
-                oJsonInner.put("team"+(i+1), team);
+                teams.add(team);
             }
+            oJsonInner.put("teams", teams);
             groups.add(oJsonInner);
         }
     }

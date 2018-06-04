@@ -15,7 +15,7 @@ public class GameController {
     @Autowired
     GameService gameService;
 
-    @GetMapping(path= "/get-games")
+    @GetMapping(path= "/")
     @ResponseBody
     public String getAllGames() {
         return gameService.getAllGames().toString();

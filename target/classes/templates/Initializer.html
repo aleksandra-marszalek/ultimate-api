@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"> <head>
+    <title>Initialize</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        table.minimalistBlack {
+            border: 3px solid #000000;
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        table.minimalistBlack td, table.minimalistBlack th {
+            border: 1px solid #000000;
+            padding: 5px 4px;
+        }
+        table.minimalistBlack tbody td {
+            font-size: 13px;
+        }
+        table.minimalistBlack thead {
+            background: #CFCFCF;
+            background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+            background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+            background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+            border-bottom: 3px solid #000000;
+        }
+        table.minimalistBlack thead th {
+            font-size: 15px;
+            font-weight: bold;
+            color: #000000;
+            text-align: left;
+        }
+        table.minimalistBlack tfoot {
+            font-size: 14px;
+            font-weight: bold;
+            color: #000000;
+            border-top: 3px solid #000000;
+        }
+        table.minimalistBlack tfoot td {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<h1>Initialize games</h1>
+<hr>
+
+<table class="minimalistBlack">
+    <tr>
+        <td><a th:href="@{/init/addGroups}">Add groups</a></td>
+        <td><a th:href="@{/init/addTeams}">Add teams</a></td>
+        <td><a th:href="@{/init/addTeamsToGroups}">Add teams to groups</a></td>
+        <td><a th:href="@{/init/addFirstGroupGames}">Add first group games</a></td>
+        <td><a th:href="@{/init/addFirstGroupGames}">Add second group games</a></td>
+        <td><a th:href="@{/init/addFirstGroupGames}">Add third group games</a></td>
+        <td><a th:href="@{/init/playGames/saturday/8}">Play first group games - 1</a></td>
+        <td><a th:href="@{/init/playGames/saturday/9}">Play first group games - 2</a></td>
+        <td><a th:href="@{/init/playGames/saturday/10}">Play second group games - 1</a></td>
+        <td><a th:href="@{/init/playGames/saturday/11}">Play second group games - 2</a></td>
+        <td><a th:href="@{/init/playGames/saturday/12}">Play third group games - 1</a></td>
+        <td><a th:href="@{/init/playGames/saturday/13}">Play third group games - 2</a></td>
+        <td><a th:href="@{/init/setPlacesInGroups}">set Places In Groups</a></td>
+        <td><a th:href="@{/init/addQuarterFinals}">add quarterfinals</a></td>
+        <td><a th:href="@{/init/playGames/saturday/16}">Play quarterfinal games - 1</a></td>
+        <td><a th:href="@{/init/playGames/saturday/17}">Play quarterfinal games - 2</a></td>
+        <td><a th:href="@{/init/addSemiFinals}">add semifinals</a></td>
+        <td><a th:href="@{/init/playGames/sunday/10}">Play semifinal games - 1</a></td>
+        <td><a th:href="@{/init/playGames/sunday/11}">Play semifinal games - 2</a></td>
+        <td><a th:href="@{/init/addFinals}">add finals</a></td>
+        <td><a th:href="@{/init/playGames/saturday/13}">Play final games - 1</a></td>
+        <td><a th:href="@{/init/playGames/saturday/14}">Play final games - 2</a></td>
+        <td><a th:href="@{/init/setFinalStandings}">set final standings</a></td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -19,7 +19,7 @@ public class TeamController {
     GroupService groupService;
 
 
-    @GetMapping("/get-teams")
+    @GetMapping("/")
     @ResponseBody
     public String getTeams() {
         return teamService.getTeams().toString();

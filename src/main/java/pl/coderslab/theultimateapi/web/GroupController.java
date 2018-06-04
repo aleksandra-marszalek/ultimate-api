@@ -17,7 +17,7 @@ public class GroupController {
     @Autowired
     GroupService groupService;
 
-    @GetMapping(path= "/get-groups")
+    @GetMapping(path= "/")
     @ResponseBody
     public String getAllGroups() {
         return groupService.getGroups().toString();

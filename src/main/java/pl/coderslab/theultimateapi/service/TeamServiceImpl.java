@@ -1,6 +1,6 @@
 package pl.coderslab.theultimateapi.service;
 
-import com.github.javafaker.Faker;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +43,11 @@ public class TeamServiceImpl implements TeamService {
             oJsonInner.put("name", t.getName());
             oJsonInner.put("seeding", t.getSeeding());
             oJsonInner.put("strength", t.getStrength());
-            JSONObject group = new JSONObject();
-            group.put("id", t.getGroup().getId());
-            group.put("name", t.getGroup().getName());
-            oJsonInner.put("group", group);
+            oJsonInner.put("group_id", t.getGroup().getId());
+//            JSONObject group = new JSONObject();
+//            group.put("id", t.getGroup().getId());
+//            group.put("name", t.getGroup().getName());
+//            oJsonInner.put("group", group);
             oJsonInner.put("placeInGroup", t.getPlaceInGroup());
             oJsonInner.put("won", t.getWon());
             oJsonInner.put("lost", t.getLost());
@@ -55,6 +56,7 @@ public class TeamServiceImpl implements TeamService {
             teams.add(oJsonInner);
         }
     }
+
 
 
 
