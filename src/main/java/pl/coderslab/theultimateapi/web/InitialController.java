@@ -118,13 +118,42 @@ public class InitialController {
 
     @GetMapping("/playFinals/saturday/{hourOfGame}")
     @ResponseBody
-    public String playFinals(@PathVariable String hourOfGame) {
+    public String playQuarterFinals(@PathVariable String hourOfGame) {
         Integer hour = Integer.parseInt(hourOfGame);
         LocalDateTime gameTime = LocalDateTime.of(2018, 9, 17, hour, 0);
         gameService.playFinals(gameTime);
         return "Games have been played";
     }
 
+    @GetMapping("/addSemiFinals")
+    @ResponseBody
+    public String addSemiFinals () {
+        gameService.addSemiFinals();
+        return "SemiFinal games added to schedule";
+    }
+
+    @GetMapping("/playFinals/sunday/{hourOfGame}")
+    @ResponseBody
+    public String playFinals(@PathVariable String hourOfGame) {
+        Integer hour = Integer.parseInt(hourOfGame);
+        LocalDateTime gameTime = LocalDateTime.of(2018, 9, 18, hour, 0);
+        gameService.playFinals(gameTime);
+        return "Games have been played";
+    }
+
+    @GetMapping("/addFinals")
+    @ResponseBody
+    public String addFinals () {
+        gameService.addFinals();
+        return "Final games added to schedule";
+    }
+
+    @GetMapping("/setFinalStandings")
+    @ResponseBody
+    public String setFinalStandings() {
+        teamService.setFinalStandings();
+        return "Final Standings Set";
+    }
 
 
 }

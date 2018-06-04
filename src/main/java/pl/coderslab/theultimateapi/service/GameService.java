@@ -44,5 +44,9 @@ public interface GameService {
 
     public void playFinals(LocalDateTime gameTime);
 
+    public void addSemiFinals();
+
+    public void addFinals ();
+
 
 }

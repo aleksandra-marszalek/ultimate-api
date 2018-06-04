@@ -43,7 +43,15 @@ public class TeamServiceImpl implements TeamService {
             oJsonInner.put("name", t.getName());
             oJsonInner.put("seeding", t.getSeeding());
             oJsonInner.put("strength", t.getStrength());
-            oJsonInner.put("group", t.getGroup().getName());
+            JSONObject group = new JSONObject();
+            group.put("id", t.getGroup().getId());
+            group.put("name", t.getGroup().getName());
+            oJsonInner.put("group", group);
+            oJsonInner.put("placeInGroup", t.getPlaceInGroup());
+            oJsonInner.put("won", t.getWon());
+            oJsonInner.put("lost", t.getLost());
+            oJsonInner.put("pointBalance", t.getPointBalance());
+            oJsonInner.put("finalStanding", t.getFinalStanding());
             teams.add(oJsonInner);
         }
     }
@@ -103,6 +111,50 @@ public class TeamServiceImpl implements TeamService {
     }
 
 
+    @Override
+    public void setFinalStandings () {
+        List<Team> teams = teamRepository.findAll();
+        for (Team t: teams) {
+            String signature = t.getLoserWinerSignature();
+            if (signature.equals("1winner")) {
+                t.setFinalStanding(1);
+            } else if (signature.equals("1loser")) {
+                t.setFinalStanding(2);
+            } else if (signature.equals("3winner")) {
+                t.setFinalStanding(3);
+            } else if (signature.equals("3loser")) {
+                t.setFinalStanding(4);
+            } else if (signature.equals("5winner")) {
+                t.setFinalStanding(5);
+            } else if (signature.equals("5loser")) {
+                t.setFinalStanding(6);
+            } else if (signature.equals("7winner")) {
+                t.setFinalStanding(7);
+            } else if (signature.equals("7loser")) {
+                t.setFinalStanding(8);
+            } else if (signature.equals("9winner")) {
+                t.setFinalStanding(9);
+            } else if (signature.equals("9loser")) {
+                t.setFinalStanding(10);
+            } else if (signature.equals("11winner")) {
+                t.setFinalStanding(11);
+            } else if (signature.equals("11loser")) {
+                t.setFinalStanding(12);
+            } else if (signature.equals("13winner")) {
+                t.setFinalStanding(13);
+            } else if (signature.equals("13loser")) {
+                t.setFinalStanding(14);
+            } else if (signature.equals("15winner")) {
+                t.setFinalStanding(15);
+            } else {
+                t.setFinalStanding(16);
+            }
+            teamRepository.save(t);
+        }
+
+    }
+
+
 
     ////////////// crud //////////////////
 
@@ -129,6 +181,11 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team findTeamByGroupAndPlaceInGroup(Group group, int placeInGroup) {
         return teamRepository.findTeamByGroupAndPlaceInGroup(group, placeInGroup);
+    }
+
+    @Override
+    public Team findTeamByTeamSignature(String singature) {
+        return teamRepository.findTeamByLoserWinerSignature(singature);
     }
 
 

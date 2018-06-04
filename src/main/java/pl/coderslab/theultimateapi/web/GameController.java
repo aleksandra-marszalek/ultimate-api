@@ -32,4 +32,6 @@ public class GameController {
     public String getFinishedGames() {
         return gameService.getFinishedGames().toString();
     }
+
+
 }

@@ -35,6 +35,8 @@ public class Team implements Comparable<Team>{
 
     private String loserWinerSignature;
 
+    private int finalStanding;
+
     public Team() {
     }
 
@@ -132,6 +134,14 @@ public class Team implements Comparable<Team>{
 
     public void setLoserWinerSignature(String loserWinerSignature) {
         this.loserWinerSignature = loserWinerSignature;
+    }
+
+    public int getFinalStanding() {
+        return finalStanding;
+    }
+
+    public void setFinalStanding(int finalStanding) {
+        this.finalStanding = finalStanding;
     }
 
     @Override

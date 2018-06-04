@@ -20,6 +20,37 @@ public class GroupServiceImpl implements GroupService {
 
     /////////////// to api ///////////////
 
+    public ArrayList<JSONObject> getGroups() {
+        return groups;
+    }
+
+    private ArrayList<JSONObject> groups = new ArrayList<>();
+
+    @Scheduled(fixedRate = 5000)
+    public void regenerate() throws JSONException {
+        groups.clear();
+        List<Group> allGroups = groupRepository.findAll();
+        for (Group g: allGroups) {
+            JSONObject oJsonInner = new JSONObject();
+            oJsonInner.put("id", g.getId());
+            oJsonInner.put("name", g.getName());
+            for (Team t: g.getTeams()) {
+                JSONObject team = new JSONObject();
+                team.put("id", t.getId());
+                team.put("name", t.getName());
+                team.put("seeding", t.getSeeding());
+                team.put("strength", t.getStrength());
+                team.put("group", t.getGroup().getName());
+                team.put("placeInGroup", t.getPlaceInGroup());
+                team.put("won", t.getWon());
+                team.put("lost", t.getLost());
+                team.put("pointBalance", t.getPointBalance());
+                team.put("finalStanding", t.getFinalStanding());
+                oJsonInner.put("team", team);
+            }
+            groups.add(oJsonInner);
+        }
+    }
 
 
 

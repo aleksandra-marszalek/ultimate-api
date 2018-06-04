@@ -150,6 +150,10 @@ public class GameServiceImpl implements GameService{
 
     }
 
+    public void setGames (LocalDateTime date1, LocalDateTime date2) {
+
+    }
+
     public void addQuarterFinals () {
         Game game1 = new Game();
         Game game2 = new Game();
@@ -193,27 +197,125 @@ public class GameServiceImpl implements GameService{
         allGames2.add(game6);
         allGames2.add(game7);
         allGames2.add(game8);
-        for (Game game: allGames1) {
-            game.setOddsForTeam1(getOddsForTeam1(game));
-            game.setOddsForTeam2(getOddsForTeam2(game));
-            game.setStatus(0);
-            LocalDateTime date = LocalDateTime.of(2018, 9, 17, 16, 0);
-            game.setGameTime(date);
-            gameRepository.save(game);
-        }
-        for (Game game: allGames2) {
-            game.setOddsForTeam1(getOddsForTeam1(game));
-            game.setOddsForTeam2(getOddsForTeam2(game));
-            game.setStatus(0);
-            LocalDateTime date = LocalDateTime.of(2018, 9, 17, 17, 0);
-            game.setGameTime(date);
-            gameRepository.save(game);
-        }
-
-
-
-
+        LocalDateTime date1 = LocalDateTime.of(2018, 9, 17, 16, 0);
+        LocalDateTime date2 = LocalDateTime.of(2018, 9, 17, 17, 0);
+        setOddsStatusDates(allGames1, allGames2, date1, date2);
     }
+
+    public void setOddsStatusDates(List<Game> allGames1, List<Game> allGames2, LocalDateTime dateTime, LocalDateTime dateTime2) {
+        setOddsStatusDatesMethod(allGames1, dateTime);
+        setOddsStatusDatesMethod(allGames2, dateTime2);
+    }
+
+    public void setOddsStatusDatesMethod(List<Game> allGames, LocalDateTime dateTime) {
+        for (Game game: allGames) {
+            game.setOddsForTeam1(getOddsForTeam1(game));
+            game.setOddsForTeam2(getOddsForTeam2(game));
+            game.setStatus(0);
+            game.setGameTime(dateTime);
+            gameRepository.save(game);
+        }
+    }
+
+
+    @Override
+    public void addSemiFinals () {
+        Game game1 = new Game();
+        Game game2 = new Game();
+        Game game3 = new Game();
+        Game game4 = new Game();
+        Game game5 = new Game();
+        Game game6 = new Game();
+        Game game7 = new Game();
+        Game game8 = new Game();
+        game1.setTeam1(teamRepository.findTeamByLoserWinerSignature("A1winner"));
+        game1.setTeam2(teamRepository.findTeamByLoserWinerSignature("C1winner"));
+        game1.setSignature("A1");
+        game2.setTeam1(teamRepository.findTeamByLoserWinerSignature("B1winner"));
+        game2.setTeam2(teamRepository.findTeamByLoserWinerSignature("D1winner"));
+        game2.setSignature("B1");
+        game3.setTeam1(teamRepository.findTeamByLoserWinerSignature("A1loser"));
+        game3.setTeam2(teamRepository.findTeamByLoserWinerSignature("C1loser"));
+        game3.setSignature("A2");
+        game4.setTeam1(teamRepository.findTeamByLoserWinerSignature("B1loser"));
+        game4.setTeam2(teamRepository.findTeamByLoserWinerSignature("D1loser"));
+        game4.setSignature("B2");
+        game5.setTeam1(teamRepository.findTeamByLoserWinerSignature("A2winner"));
+        game5.setTeam2(teamRepository.findTeamByLoserWinerSignature("C2winner"));
+        game5.setSignature("A3");
+        game6.setTeam1(teamRepository.findTeamByLoserWinerSignature("B2winner"));
+        game6.setTeam2(teamRepository.findTeamByLoserWinerSignature("D2winner"));
+        game6.setSignature("B3");
+        game7.setTeam1(teamRepository.findTeamByLoserWinerSignature("A2loser"));
+        game7.setTeam2(teamRepository.findTeamByLoserWinerSignature("C2loser"));
+        game7.setSignature("A4");
+        game8.setTeam1(teamRepository.findTeamByLoserWinerSignature("B2loser"));
+        game8.setTeam2(teamRepository.findTeamByLoserWinerSignature("D2loser"));
+        game8.setSignature("B4");
+        List<Game> allGames1 = new ArrayList<>();
+        List<Game> allGames2 = new ArrayList<>();
+        allGames1.add(game1);
+        allGames1.add(game2);
+        allGames1.add(game3);
+        allGames1.add(game4);
+        allGames2.add(game5);
+        allGames2.add(game6);
+        allGames2.add(game7);
+        allGames2.add(game8);
+        LocalDateTime date1 = LocalDateTime.of(2018, 9, 18, 11, 0);
+        LocalDateTime date2 = LocalDateTime.of(2018, 9, 18, 10, 0);
+        setOddsStatusDates(allGames1, allGames2, date1, date2);
+    }
+
+    @Override
+    public void addFinals () {
+        Game game1 = new Game();
+        Game game2 = new Game();
+        Game game3 = new Game();
+        Game game4 = new Game();
+        Game game5 = new Game();
+        Game game6 = new Game();
+        Game game7 = new Game();
+        Game game8 = new Game();
+        game1.setTeam1(teamRepository.findTeamByLoserWinerSignature("A1winner"));
+        game1.setTeam2(teamRepository.findTeamByLoserWinerSignature("B1winner"));
+        game1.setSignature("1");
+        game2.setTeam1(teamRepository.findTeamByLoserWinerSignature("A1loser"));
+        game2.setTeam2(teamRepository.findTeamByLoserWinerSignature("B1loser"));
+        game2.setSignature("3");
+        game3.setTeam1(teamRepository.findTeamByLoserWinerSignature("A2winner"));
+        game3.setTeam2(teamRepository.findTeamByLoserWinerSignature("B2winner"));
+        game3.setSignature("5");
+        game4.setTeam1(teamRepository.findTeamByLoserWinerSignature("A2loser"));
+        game4.setTeam2(teamRepository.findTeamByLoserWinerSignature("B2loser"));
+        game4.setSignature("7");
+        game5.setTeam1(teamRepository.findTeamByLoserWinerSignature("A3winner"));
+        game5.setTeam2(teamRepository.findTeamByLoserWinerSignature("B3winner"));
+        game5.setSignature("9");
+        game6.setTeam1(teamRepository.findTeamByLoserWinerSignature("A3loser"));
+        game6.setTeam2(teamRepository.findTeamByLoserWinerSignature("B3loser"));
+        game6.setSignature("11");
+        game7.setTeam1(teamRepository.findTeamByLoserWinerSignature("A4winner"));
+        game7.setTeam2(teamRepository.findTeamByLoserWinerSignature("B4winner"));
+        game7.setSignature("13");
+        game8.setTeam1(teamRepository.findTeamByLoserWinerSignature("A4loser"));
+        game8.setTeam2(teamRepository.findTeamByLoserWinerSignature("B4loser"));
+        game8.setSignature("15");
+        List<Game> allGames1 = new ArrayList<>();
+        List<Game> allGames2 = new ArrayList<>();
+        allGames1.add(game1);
+        allGames1.add(game2);
+        allGames1.add(game3);
+        allGames1.add(game4);
+        allGames2.add(game5);
+        allGames2.add(game6);
+        allGames2.add(game7);
+        allGames2.add(game8);
+        LocalDateTime date1 = LocalDateTime.of(2018, 9, 18, 14, 0);
+        LocalDateTime date2 = LocalDateTime.of(2018, 9, 18, 13, 0);
+        setOddsStatusDates(allGames1, allGames2, date1, date2);
+    }
+
 
     public Team getTeamByGroupAndPlace(String a, int i) {
         return teamRepository.findTeamByGroupAndPlaceInGroup(groupRepository.findGroupByName(a), i);
@@ -419,16 +521,30 @@ public class GameServiceImpl implements GameService{
             oJsonInner.put("oddsForTeam1", g.getOddsForTeam1());
             oJsonInner.put("oddsForTeam2", g.getOddsForTeam2());
             oJsonInner.put("status", g.getStatus());
+            oJsonInner.put("signature", g.getSignature());
+            oJsonInner.put("status", g.getStatus());
             JSONObject team1 = new JSONObject();
             team1.put("id", g.getTeam1().getId());
-            team1.put("name",  g.getTeam1().getName());
+            team1.put("name", g.getTeam1().getName());
             team1.put("seeding", g.getTeam1().getSeeding());
             team1.put("strength", g.getTeam1().getStrength());
+            team1.put("group", g.getTeam1().getGroup().getName());
+            team1.put("placeInGroup", g.getTeam1().getPlaceInGroup());
+            team1.put("won", g.getTeam1().getWon());
+            team1.put("lost", g.getTeam1().getLost());
+            team1.put("pointBalance", g.getTeam1().getPointBalance());
+            team1.put("finalStanding", g.getTeam1().getFinalStanding());
             JSONObject team2 = new JSONObject();
             team2.put("id", g.getTeam2().getId());
-            team2.put("name",  g.getTeam2().getName());
+            team2.put("name", g.getTeam2().getName());
             team2.put("seeding", g.getTeam2().getSeeding());
             team2.put("strength", g.getTeam2().getStrength());
+            team2.put("group", g.getTeam2().getGroup().getName());
+            team2.put("placeInGroup", g.getTeam2().getPlaceInGroup());
+            team2.put("won", g.getTeam2().getWon());
+            team2.put("lost", g.getTeam2().getLost());
+            team2.put("pointBalance", g.getTeam2().getPointBalance());
+            team2.put("finalStanding", g.getTeam2().getFinalStanding());
             oJsonInner.put("team1", team1);
             oJsonInner.put("team2", team2);
             games.add(oJsonInner);

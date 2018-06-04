@@ -25,4 +25,8 @@ public interface TeamService {
 
     Team findTeamByGroupAndPlaceInGroup (Group group, int placeInGroup);
 
+    Team findTeamByTeamSignature (String singature);
+
+    public void setFinalStandings ();
+
 }

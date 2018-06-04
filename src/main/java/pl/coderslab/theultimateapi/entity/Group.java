@@ -13,7 +13,7 @@ public class Group {
 
     private String name;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
     private List<Team> teams;
 
 
