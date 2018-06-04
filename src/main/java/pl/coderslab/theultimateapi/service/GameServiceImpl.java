@@ -294,10 +294,13 @@ public class GameServiceImpl implements GameService{
                         g.getTeam2().setStrength((g.getTeam1().getStrength()+g.getTeam2().getStrength())/2.0);
                     }
                 }
+
                 g.setOddsForTeam1(getOddsForTeam1(g));
                 g.setOddsForTeam2(getOddsForTeam2(g));
-                teamRepository.save(g.getTeam1());
-                teamRepository.save(g.getTeam2());
+
+
+//                teamRepository.save(g.getTeam1());
+//                teamRepository.save(g.getTeam2());
                 g.setStatus(1);
                 gameRepository.save(g);
             }

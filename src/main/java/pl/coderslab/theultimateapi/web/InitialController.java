@@ -29,6 +29,7 @@ public class InitialController {
     @Autowired
     GameService gameService;
 
+
     @GetMapping("/addTeams")
     @ResponseBody
     public String addTeams () {
@@ -120,7 +121,7 @@ public class InitialController {
     public String playFinals(@PathVariable String hourOfGame) {
         Integer hour = Integer.parseInt(hourOfGame);
         LocalDateTime gameTime = LocalDateTime.of(2018, 9, 17, hour, 0);
-        gameService.playGames(gameTime);
+        gameService.playFinals(gameTime);
         return "Games have been played";
     }
 
