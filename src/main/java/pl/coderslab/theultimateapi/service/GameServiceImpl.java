@@ -228,30 +228,36 @@ public class GameServiceImpl implements GameService{
         Game game6 = new Game();
         Game game7 = new Game();
         Game game8 = new Game();
-        game1.setTeam1(teamRepository.findTeamByLoserWinerSignature("A1winner"));
-        game1.setTeam2(teamRepository.findTeamByLoserWinerSignature("C1winner"));
-        game1.setSignature("A1");
-        game2.setTeam1(teamRepository.findTeamByLoserWinerSignature("B1winner"));
-        game2.setTeam2(teamRepository.findTeamByLoserWinerSignature("D1winner"));
-        game2.setSignature("B1");
-        game3.setTeam1(teamRepository.findTeamByLoserWinerSignature("A1loser"));
-        game3.setTeam2(teamRepository.findTeamByLoserWinerSignature("C1loser"));
-        game3.setSignature("A2");
-        game4.setTeam1(teamRepository.findTeamByLoserWinerSignature("B1loser"));
-        game4.setTeam2(teamRepository.findTeamByLoserWinerSignature("D1loser"));
-        game4.setSignature("B2");
-        game5.setTeam1(teamRepository.findTeamByLoserWinerSignature("A2winner"));
-        game5.setTeam2(teamRepository.findTeamByLoserWinerSignature("C2winner"));
-        game5.setSignature("A3");
-        game6.setTeam1(teamRepository.findTeamByLoserWinerSignature("B2winner"));
-        game6.setTeam2(teamRepository.findTeamByLoserWinerSignature("D2winner"));
-        game6.setSignature("B3");
-        game7.setTeam1(teamRepository.findTeamByLoserWinerSignature("A2loser"));
-        game7.setTeam2(teamRepository.findTeamByLoserWinerSignature("C2loser"));
-        game7.setSignature("A4");
-        game8.setTeam1(teamRepository.findTeamByLoserWinerSignature("B2loser"));
-        game8.setTeam2(teamRepository.findTeamByLoserWinerSignature("D2loser"));
-        game8.setSignature("B4");
+        setTeams(game1, "A1winner", "C1winner", "A1");
+        setTeams(game2, "B1winner", "D1winner", "B1");
+        setTeams(game3, "A1loser", "C1loser", "A2");
+        setTeams(game4, "B1loser", "D1loser", "B2");
+        setTeams(game5, "A2winner", "C2winner", "A3");
+        setTeams(game6, "B2winner", "D2winner", "B3");
+        setTeams(game7, "A2loser", "C2loser", "A4");
+        setTeams(game8, "B2loser", "D2loser", "B4");
+
+//        game2.setTeam1(teamRepository.findTeamByLoserWinerSignature("B1winner"));
+//        game2.setTeam2(teamRepository.findTeamByLoserWinerSignature("D1winner"));
+//        game2.setSignature("B1");
+//        game3.setTeam1(teamRepository.findTeamByLoserWinerSignature("A1loser"));
+//        game3.setTeam2(teamRepository.findTeamByLoserWinerSignature("C1loser"));
+//        game3.setSignature("A2");
+//        game4.setTeam1(teamRepository.findTeamByLoserWinerSignature("B1loser"));
+//        game4.setTeam2(teamRepository.findTeamByLoserWinerSignature("D1loser"));
+//        game4.setSignature("B2");
+//        game5.setTeam1(teamRepository.findTeamByLoserWinerSignature("A2winner"));
+//        game5.setTeam2(teamRepository.findTeamByLoserWinerSignature("C2winner"));
+//        game5.setSignature("A3");
+//        game6.setTeam1(teamRepository.findTeamByLoserWinerSignature("B2winner"));
+//        game6.setTeam2(teamRepository.findTeamByLoserWinerSignature("D2winner"));
+//        game6.setSignature("B3");
+//        game7.setTeam1(teamRepository.findTeamByLoserWinerSignature("A2loser"));
+//        game7.setTeam2(teamRepository.findTeamByLoserWinerSignature("C2loser"));
+//        game7.setSignature("A4");
+//        game8.setTeam1(teamRepository.findTeamByLoserWinerSignature("B2loser"));
+//        game8.setTeam2(teamRepository.findTeamByLoserWinerSignature("D2loser"));
+//        game8.setSignature("B4");
         List<Game> allGames1 = new ArrayList<>();
         List<Game> allGames2 = new ArrayList<>();
         allGames1.add(game1);
@@ -265,6 +271,15 @@ public class GameServiceImpl implements GameService{
         LocalDateTime date1 = LocalDateTime.of(2018, 9, 18, 11, 0);
         LocalDateTime date2 = LocalDateTime.of(2018, 9, 18, 10, 0);
         setOddsStatusDates(allGames1, allGames2, date1, date2);
+    }
+
+
+
+
+    public void setTeams(Game game1, String team1Signature, String team2signature, String gameSignature) {
+        game1.setTeam1(teamRepository.findTeamByLoserWinerSignature(team1Signature));
+        game1.setTeam2(teamRepository.findTeamByLoserWinerSignature(team2signature));
+        game1.setSignature(gameSignature);
     }
 
     @Override
