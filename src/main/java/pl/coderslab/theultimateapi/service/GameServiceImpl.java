@@ -250,7 +250,7 @@ public class GameServiceImpl implements GameService{
 //        game5.setTeam2(teamRepository.findTeamByLoserWinerSignature("C2winner"));
 //        game5.setSignature("A3");
 //        game6.setTeam1(teamRepository.findTeamByLoserWinerSignature("B2winner"));
-//        game6.setTeam2(teamRepository.findTeamByLoserWinerSignature("D2winner"));
+//        game6.setTeam2(teamRepository.findTeamByLoserWinerSignature("D2inner"));
 //        game6.setSignature("B3");
 //        game7.setTeam1(teamRepository.findTeamByLoserWinerSignature("A2loser"));
 //        game7.setTeam2(teamRepository.findTeamByLoserWinerSignature("C2loser"));
