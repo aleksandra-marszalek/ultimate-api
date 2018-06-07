@@ -539,30 +539,6 @@ public class GameServiceImpl implements GameService{
             oJsonInner.put("signature", g.getSignature());
             oJsonInner.put("team1_id", g.getTeam1().getId());
             oJsonInner.put("team2_id", g.getTeam2().getId());
-//            JSONObject team1 = new JSONObject();
-//            team1.put("id", g.getTeam1().getId());
-//            team1.put("name", g.getTeam1().getName());
-//            team1.put("seeding", g.getTeam1().getSeeding());
-//            team1.put("strength", g.getTeam1().getStrength());
-//            team1.put("group", g.getTeam1().getGroup().getName());
-//            team1.put("placeInGroup", g.getTeam1().getPlaceInGroup());
-//            team1.put("won", g.getTeam1().getWon());
-//            team1.put("lost", g.getTeam1().getLost());
-//            team1.put("pointBalance", g.getTeam1().getPointBalance());
-//            team1.put("finalStanding", g.getTeam1().getFinalStanding());
-//            JSONObject team2 = new JSONObject();
-//            team2.put("id", g.getTeam2().getId());
-//            team2.put("name", g.getTeam2().getName());
-//            team2.put("seeding", g.getTeam2().getSeeding());
-//            team2.put("strength", g.getTeam2().getStrength());
-//            team2.put("group", g.getTeam2().getGroup().getName());
-//            team2.put("placeInGroup", g.getTeam2().getPlaceInGroup());
-//            team2.put("won", g.getTeam2().getWon());
-//            team2.put("lost", g.getTeam2().getLost());
-//            team2.put("pointBalance", g.getTeam2().getPointBalance());
-//            team2.put("finalStanding", g.getTeam2().getFinalStanding());
-//            oJsonInner.put("team1", team1);
-//            oJsonInner.put("team2", team2);
             games.add(oJsonInner);
         }
     }
